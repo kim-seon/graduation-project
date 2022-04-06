@@ -1,5 +1,9 @@
 import React from 'react'
 import { Form, Input, Button, Radio, Select } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { LockOutlined } from '@ant-design/icons';
+import { SmileOutlined } from '@ant-design/icons';
+import { EnvironmentOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -8,62 +12,71 @@ function RegisterPage() {
         <div>
             <h1>회원가입</h1>
             <form style={{ width: '375px' }} >
-                <Radio.Group>
-                    <Radio>일반회원</Radio>
-                    <Radio>보호소 직원</Radio>
+                <Radio.Group defaultValue={1}>
+                    <Radio value={1}>일반회원</Radio>
+                    <Radio value={2}>보호소 직원</Radio>
                 </Radio.Group>
-                <Form.Item label='이메일' >
+                <Form.Item>
                         <Input
                             id='email'
                             type='email'
+                            placeholder='이메일'
+                            prefix={<UserOutlined/>}
+                            required
                         />
                     </Form.Item>
-                    <Form.Item label='닉네임'>
+                    <Form.Item>
                         <Input
-                            id='name'
+                            id='nickname'
                             type='text'
+                            prefix={<SmileOutlined/>}
+                            placeholder='닉네임'
                         />
                     </Form.Item>
                     <Form.Item
-                        label="비밀번호"
                         name="password"
                         rules={[
                         {
-                            message: 'Please input your password!',
+                            message: '비밀번호를 입력해주세요.',
                         },
                         ]}
                     >
-                    <Input.Password />
+                    <Input.Password
+                        placeholder='비밀번호'
+                        prefix={<LockOutlined/>}
+                    />
                     </Form.Item>
                     <Form.Item
-                        label="비밀번호 확인"
                         name="confirmpassword"
                         rules={[
                         {
-                            message: 'Please input your password!',
+                            message: '비밀번호를 입력해주세요.',
                         },
                         ]}
                     >
-                    <Input.Password />
+                    <Input.Password
+                        placeholder='비밀번호 학인'
+                        prefix={<LockOutlined/>}
+                    />
                     </Form.Item>
-                    <Form.Item label="거주지역">
-                        <Select>
-                            <Option value="">서울</Option>
-                            <Option value="">부산</Option>
-                            <Option value="">대구</Option>
-                            <Option value="">인천</Option>
-                            <Option value="">광주</Option>
-                            <Option value="">대전</Option>
-                            <Option value="">울산</Option>
-                            <Option value="">강원</Option>
-                            <Option value="">경기</Option>
-                            <Option value="">경남</Option>
-                            <Option value="">경북</Option>
-                            <Option value="">전남</Option>
-                            <Option value="">전북</Option>
-                            <Option value="">제주</Option>
-                            <Option value="">충남</Option>
-                            <Option value="">충북</Option>
+                    <Form.Item>
+                        <Select style={{width: 120}} placeholder='거주지역' >
+                            <Option value="1">서울</Option>
+                            <Option value="2">부산</Option>
+                            <Option value="3">대구</Option>
+                            <Option value="4">인천</Option>
+                            <Option value="5">광주</Option>
+                            <Option value="6">대전</Option>
+                            <Option value="7">울산</Option>
+                            <Option value="8">강원</Option>
+                            <Option value="9">경기</Option>
+                            <Option value="10">경남</Option>
+                            <Option value="11">경북</Option>
+                            <Option value="12">전남</Option>
+                            <Option value="13">전북</Option>
+                            <Option value="14">제주</Option>
+                            <Option value="15">충남</Option>
+                            <Option value="16">충북</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item>
