@@ -1,10 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Input, Space } from 'antd';
 
-const { Search } = Input;
-
-const onSearch = value => console.log(value);
 
 function MainPage() {
     return (
@@ -12,7 +8,7 @@ function MainPage() {
         <section>
             <h2>지역 검색</h2>
             <div>
-            <Search placeholder="input search text" onSearch={onSearch} enterButton />
+            <input />
             </div>
         </section>
         <section>

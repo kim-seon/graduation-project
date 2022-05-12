@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "backend": "supervisor server/index.js",
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
   },
   "keywords": [],
   "author": "",
@@ -17,7 +19,8 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.9",
-    "react-redux": "^7.2.7"
+    "react-redux": "^7.2.7",
+    "supervisor": "^0.12.0"
   },
   "devDependencies": {
     "concurrently": "^7.0.0"
