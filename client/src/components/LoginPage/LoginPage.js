@@ -6,14 +6,21 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../_actions/user_action';
 
-
-// eslint-disable-next-line
 function LoginPage(props) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [formErrorMessage, setFormErrorMessage] = useState('')
 
+
+    const { Kakao } = window
+
+    const loginWithKakao = () => {
+        console.log('시작')
+        Kakao.Auth.authorize({
+            redirectUri: 'http://localhost:3000/oauth/kakao'
+        })
+    }
     return (
         <Formik
             initialValues={{
@@ -105,7 +112,7 @@ function LoginPage(props) {
                             </div>
                             {formErrorMessage && (<label><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>)} 
                             <div>
-                                
+                                <a onClick={loginWithKakao}>카카오 로그인</a>
                                 <div id='naverIdLogin'></div>
                                 <button style={{minWidth: '100%'}}>페이스북 로그인</button>
                             </div>

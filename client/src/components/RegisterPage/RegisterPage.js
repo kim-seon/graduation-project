@@ -11,6 +11,7 @@ function RegisterPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const initialRegionOption ={ id: 0, label: "선택" }
     const RegionOptions = [
         { id: 1, label: "서울" },
         { id: 2, label: "인천" },
@@ -43,7 +44,7 @@ function RegisterPage(props) {
                 nickname: '',
                 password: '',
                 confirmPassword: '',
-                region: '서울'
+                region: '선택'
             }}
             validationSchema={Yup.object().shape({
                 email: Yup.string()
@@ -174,7 +175,9 @@ function RegisterPage(props) {
                                         className={
                                             errors.region && touched.region ? 'text-input error' : 'text-input'
                                         }
+                                        
                                     >
+                                    <option value={initialRegionOption}>{initialRegionOption.label}</option>
                                     {RegionOptions.map((option) => (
                                         <option key={option.id} value={option.label}>{option.label}</option>
                                     ))}

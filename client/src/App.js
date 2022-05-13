@@ -19,6 +19,7 @@ import Basicform from './components/WritePage/Basicform';
 import Simpleform from './components/WritePage/Simpleform';
 import ReadDetail from './components/ReadPage/ReadDetail';
 import Auth from './hoc/auth';
+import LoginWithKakao from './modules/KakaoAuth';
 
 function App() {
   const NewMainPage = Auth(MainPage, null)
@@ -50,6 +51,7 @@ function App() {
           <Route path='/basicwrite' element={<Basicform/>}/>
           <Route path='/simplewrite' element={<Simpleform/>}/>
           <Route path='/read' element={<ReadDetail/>}/>
+          <Route path='/oauth/kakao' element={<LoginWithKakao />}></Route>
         </Routes>
       
     </Router>
