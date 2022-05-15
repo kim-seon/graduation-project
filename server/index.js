@@ -10,6 +10,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use('/api/users', require('./routes/users'))
+app.use('/api/write', require('./routes/write'))
 
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI)

@@ -22,8 +22,8 @@ const userSchema = mongoose.Schema({
         type: String
     },
     role: {
-        type: Number,
-        default: 0
+        type: String,
+        default: 'normal'
     },
     token: {
         type: String

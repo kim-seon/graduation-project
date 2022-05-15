@@ -19,7 +19,7 @@ import Basicform from './components/WritePage/Basicform';
 import Simpleform from './components/WritePage/Simpleform';
 import ReadDetail from './components/ReadPage/ReadDetail';
 import Auth from './hoc/auth';
-import LoginWithKakao from './modules/KakaoAuth';
+import ReadPage from './components/ReadPage/ReadPage';
 
 function App() {
   const NewMainPage = Auth(MainPage, null)
@@ -31,6 +31,7 @@ function App() {
   const NewReviewPage = Auth(ReviewPage, null)
   const NewAdoptPage = Auth(AdoptPage, null)
   const NewFindPage = Auth(FindPage, null)
+  const NewBasicPage = Auth(Basicform, true)
 
   return (
     /**Suspense : 컴포넌트가 렌더링되기 전까지 로드 상태 */
@@ -48,10 +49,10 @@ function App() {
           <Route path='/review' element={<NewReviewPage/>}/>
           <Route path='/adopt' element={<NewAdoptPage/>}/>
           <Route path='/find' element={<NewFindPage/>}/>
-          <Route path='/basicwrite' element={<Basicform/>}/>
+          <Route path='/basicwrite' element={<NewBasicPage/>}/>
           <Route path='/simplewrite' element={<Simpleform/>}/>
           <Route path='/read' element={<ReadDetail/>}/>
-          <Route path='/oauth/kakao' element={<LoginWithKakao />}></Route>
+          <Route path='/simpleread' element={<ReadPage/>}/>
         </Routes>
       
     </Router>

@@ -18,7 +18,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
                 if(!response.payload.isAuth) {
                     if(option) navigate('/login');
                 } else {
-                    if(adminRoute && !response.payload.isAdmin) {
+                    if(adminRoute) {
                         navigate('/');
                     } else {
                         if(option === false) {

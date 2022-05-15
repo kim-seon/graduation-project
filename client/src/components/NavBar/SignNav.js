@@ -33,6 +33,7 @@ function SignNav() {
         return (
             <ul>
                 <li onClick={logoutHandler}>로그아웃</li>
+                <li><a>{ user.userData && user.userData.nickname }</a></li>
             </ul>
         )
     }

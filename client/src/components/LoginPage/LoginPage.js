@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../_actions/user_action';
+import { KAKAO_AUTH_URL } from '../../modules/KakaoAuth';
 
 function LoginPage(props) {
     const dispatch = useDispatch()
@@ -12,15 +13,6 @@ function LoginPage(props) {
 
     const [formErrorMessage, setFormErrorMessage] = useState('')
 
-
-    const { Kakao } = window
-
-    const loginWithKakao = () => {
-        console.log('시작')
-        Kakao.Auth.authorize({
-            redirectUri: 'http://localhost:3000/oauth/kakao'
-        })
-    }
     return (
         <Formik
             initialValues={{
@@ -79,7 +71,7 @@ function LoginPage(props) {
                         <section>
                             <h1>로그인</h1>
                         </section>
-                        <form style={{ width: '375px' }}>
+                        <form onSubmit={handleSubmit} style={{ width: '375px' }}>
                             <div>
                                 <label>이메일
                                 <input
@@ -112,12 +104,12 @@ function LoginPage(props) {
                             </div>
                             {formErrorMessage && (<label><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>)} 
                             <div>
-                                <a onClick={loginWithKakao}>카카오 로그인</a>
+                                <a href={KAKAO_AUTH_URL}>카카오 로그인</a>
                                 <div id='naverIdLogin'></div>
                                 <button style={{minWidth: '100%'}}>페이스북 로그인</button>
                             </div>
                             <div>
-                                <input type='submit' value='로그인' />
+                                <input type='submit' disabled={isSubmitting} onSubmit={handleSubmit}  value='로그인' />
                             </div>
                         
                             <div>

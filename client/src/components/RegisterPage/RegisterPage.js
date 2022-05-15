@@ -11,6 +11,11 @@ function RegisterPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const RoleOptions = [
+        { name: 'role', value: '일반회원' },
+        { name: 'role', value: '보호소직원' }
+    ]
+
     const initialRegionOption ={ id: 0, label: "선택" }
     const RegionOptions = [
         { id: 1, label: "서울" },
@@ -40,6 +45,7 @@ function RegisterPage(props) {
     return (
         <Formik
             initialValues={{
+                role: 'normal',
                 email: '',
                 nickname: '',
                 password: '',
@@ -47,11 +53,21 @@ function RegisterPage(props) {
                 region: '선택'
             }}
             validationSchema={Yup.object().shape({
+                role: Yup.string()
+                    .required('가입 권한을 선택해주세요.'),
                 email: Yup.string()
-                    .email('이메일이 입력되지 않았어요.')
+                    .email('이메일 형식으로 입력해주세요.')
                     .required('이메일을 입력하세요.'),
                 nickname: Yup.string()
-                    .required('닉네임을 입력하세요.'),
+                    .when("role", {
+                        is: 'normal',
+                        then: Yup.string().required('닉네임을 입력하세요.')
+                    })
+                    .when("role", {
+                        is: 'protection',
+                        then: Yup.string().required('보호소 직원 회원은 닉네임에 \'보호소\'가 포함되어야 해요.').matches(/[보호소]/, '단어 \'보호소\'를 포함해주세요.')
+                    })
+                    ,
                 password: Yup.string()
                     .min(6, '비밀번호는 6자 이상 입력해야 해요.')
                     .required('비밀번호를 입력하세요.'),
@@ -64,6 +80,7 @@ function RegisterPage(props) {
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     let dataToSubmit = {
+                        role: values.role,
                         email: values.email,
                         password: values.password,
                         nickname: values.nickname,
@@ -102,8 +119,9 @@ function RegisterPage(props) {
                             </section>
                             <form style={{ width: '375px' }} onSubmit={handleSubmit} >
                                 <div>
-                                    <label><input name='authority' type='radio' value='normal' defaultChecked />일반회원</label>
-                                    <label><input name='authority' type='radio' value='protection' />보호소 직원</label>
+                                    <label><input name='role' type='radio' value='normal' checked={values.role === "normal"} onChange={handleChange} />일반회원</label>
+                                    <label><input name='role' type='radio' value='protection' checked={values.role === "protection"} onChange={handleChange} />보호소 직원</label>
+                                    
                                 </div>
                                 <div>
                                     <label>이메일
@@ -136,6 +154,7 @@ function RegisterPage(props) {
                                         }
                                     /></label>
                                     {errors.nickname && touched.nickname && (<div className="input-feedback">{errors.nickname}</div>)}
+                                    
                                 </div>
                                 <div>
                                     <label>비밀번호
