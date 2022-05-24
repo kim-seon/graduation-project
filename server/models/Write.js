@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const writeSchema = mongoose.Schema({
-    index: {
+    id: {
+        type: Number
+    },
+    Category: {
         type: String,
     },
     title: {
@@ -18,7 +21,7 @@ const writeSchema = mongoose.Schema({
     },
     writer: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     viewCount: {
         type: Number,

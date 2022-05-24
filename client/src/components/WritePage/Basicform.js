@@ -9,6 +9,7 @@ function Basicform() {
     const [Content, setContent] = useState('')
     const [Title, setTitle] = useState('')
     const [Image, setImage] = useState([])
+    
 
     
     const addImage = (e) => {
@@ -33,7 +34,6 @@ function Basicform() {
 
     const onSubmit = (e) => {
         e.preventDefault()
-
         if(user.userData && !user.userData.isAuth) {
             return alert('로그인을 해주세요.')
         }
@@ -42,6 +42,7 @@ function Basicform() {
         }
         
         const datas = {
+            writer: user.userData && user.userData._id,
             title: Title,
             content: Content,
             images: Image
@@ -57,7 +58,7 @@ function Basicform() {
                     alert('글작성 실패')
                 }
             }).catch(e => {
-                console.log(e)
+                console.log(e.response)
             })
         }
 

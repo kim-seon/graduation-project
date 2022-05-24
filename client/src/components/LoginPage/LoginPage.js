@@ -38,7 +38,8 @@ function LoginPage(props) {
                         .then(response => {
                             if(response.payload.loginSuccess) {
                                 window.localStorage.setItem('userId', response.payload.userId)
-                                navigate('/')
+                                //navigate('/')
+                                window.location.href ='/'
                             } else {
                                 setFormErrorMessage('이메일과 비밀번호를 확인해주세요.')
                             }
@@ -68,56 +69,56 @@ function LoginPage(props) {
                 } = props;
                 return (
                     <div className='app'>
-                        <section>
+                        <div className='inputForm'>
                             <h1>로그인</h1>
-                        </section>
-                        <form onSubmit={handleSubmit} style={{ width: '375px' }}>
-                            <div>
-                                <label>이메일
-                                <input
-                                    id='email'
-                                    type='email'
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={
-                                        errors.email && touched.email ? 'text-input error' : 'text-input'
-                                    }
-                                    />
-                                    {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
-                                </label>
-                            </div>
-                            <div>
-                                <label>비밀번호
-                                <input
-                                    id='password'
-                                    type='password'
-                                    value={values.password}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={
-                                        errors.password && touched.password ? 'text-input error' : 'text-input'
-                                    }
-                                    />
-                                    {errors.password && touched.password && (<div className="input-feedback">{errors.password}</div>)}
-                                </label>
-                            </div>
-                            {formErrorMessage && (<label><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>)} 
-                            <div>
-                                <a href={KAKAO_AUTH_URL}>카카오 로그인</a>
-                                <div id='naverIdLogin'></div>
-                                <button style={{minWidth: '100%'}}>페이스북 로그인</button>
-                            </div>
-                            <div>
-                                <input type='submit' disabled={isSubmitting} onSubmit={handleSubmit}  value='로그인' />
-                            </div>
-                        
-                            <div>
-                                <button>비밀번호 찾기</button>
-                                <br />
-                                계정이 없다면? <a href='/register'>이메일로 회원가입</a>
-                            </div>
-                        </form>
+                            <form onSubmit={handleSubmit} >
+                                <div className='infoForm'>
+                                    <input
+                                        id='email'
+                                        type='email'
+                                        placeholder='이메일'
+                                        value={values.email}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={
+                                            errors.email && touched.email ? 'text-input error' : 'text-input'
+                                        }
+                                        />
+                                        {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
+                                </div>
+                                <div className='infoForm'>
+                                    <input
+                                        id='password'
+                                        type='password'
+                                        placeholder='비밀번호'
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={
+                                            errors.password && touched.password ? 'text-input error' : 'text-input'
+                                        }
+                                        />
+                                        {errors.password && touched.password && (<div className="input-feedback">{errors.password}</div>)}
+                                    
+                                </div>
+                                {formErrorMessage && (<label><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>)} 
+                                <div className='socialLogin'>
+                                    <p id='kakaoIdLogin'><a href={KAKAO_AUTH_URL} style={{ textDecorationLine: 'none' }}>카카오 로그인</a></p>
+                                    <p id='naverIdLogin'><a>네이버 로그인</a></p>
+                                    <p id='facebookIdLogin'><a>페이스북 로그인</a></p>
+                                </div>
+                                <div>
+                                    <button className='submitBtn' type='submit' disabled={isSubmitting} onSubmit={handleSubmit}>로그인</button>
+                                </div>
+                                <div>
+                                    <a className='findPassword' >비밀번호 찾기</a>
+                                    <br />
+                                    <span className='move2register'>
+                                    계정이 없다면? <a href='/register' >이메일로 회원가입</a>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 )
             }}    

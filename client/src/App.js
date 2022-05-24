@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useLocation,
 } from 'react-router-dom';
 
 import NavBar from './components/NavBar/NavBar';
@@ -37,13 +38,11 @@ function App() {
     /**Suspense : 컴포넌트가 렌더링되기 전까지 로드 상태 */
     <Suspense fallback={(<div>Loading...</div>)}>
     <Router>
-      <NavBar />
+      {!["/login", "/register"].includes(window.location.pathname) && <NavBar /> }
         <Routes>
-          <Route path='/nav' element={<NavBar />} />
-          <Route path='/' element={<NewMainPage />} />
-          <Route path='/map' element={<NewMapPage />} />
           <Route path='/login' element={<NewLoginPage />} />
           <Route path='/register' element={<NewRegisterPage/>} />
+          <Route path='/map' element={<NewMapPage />} />
           <Route path='/community' element={<NewTalkPage/>} />
           <Route path='/volunteer' element={<NewVolunteerPage/>}/>
           <Route path='/review' element={<NewReviewPage/>}/>
@@ -51,8 +50,9 @@ function App() {
           <Route path='/find' element={<NewFindPage/>}/>
           <Route path='/basicwrite' element={<NewBasicPage/>}/>
           <Route path='/simplewrite' element={<Simpleform/>}/>
-          <Route path='/read' element={<ReadDetail/>}/>
+          <Route path='/read/:id' element={<ReadDetail/>}/>
           <Route path='/simpleread' element={<ReadPage/>}/>
+          <Route path='/' element={<NewMainPage />} />
         </Routes>
       
     </Router>

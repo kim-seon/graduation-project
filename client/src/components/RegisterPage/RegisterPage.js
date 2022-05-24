@@ -5,18 +5,14 @@ import * as Yup from 'yup';
 import { registerUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 function RegisterPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const RoleOptions = [
-        { name: 'role', value: '일반회원' },
-        { name: 'role', value: '보호소직원' }
-    ]
-
-    const initialRegionOption ={ id: 0, label: "선택" }
+    const initialRegionOption ={ id: 0, label: "지역 선택" }
     const RegionOptions = [
         { id: 1, label: "서울" },
         { id: 2, label: "인천" },
@@ -42,6 +38,13 @@ function RegisterPage(props) {
         setSelectedRegion(e.target.value)
         console.log(SelectedRegion)
     }
+
+    const [ShowInput, setShowInput] = useState(false)
+
+    const handleShowInput = () => {
+        setShowInput(true)
+    }
+
     return (
         <Formik
             initialValues={{
@@ -50,7 +53,7 @@ function RegisterPage(props) {
                 nickname: '',
                 password: '',
                 confirmPassword: '',
-                region: '선택'
+                region: '지역 선택'
             }}
             validationSchema={Yup.object().shape({
                 role: Yup.string()
@@ -66,7 +69,7 @@ function RegisterPage(props) {
                     .when("role", {
                         is: 'protection',
                         then: Yup.string().required('보호소 직원 회원은 닉네임에 \'보호소\'가 포함되어야 해요.').matches(/[보호소]/, '단어 \'보호소\'를 포함해주세요.')
-                    })
+                    })                   
                     ,
                 password: Yup.string()
                     .min(6, '비밀번호는 6자 이상 입력해야 해요.')
@@ -114,99 +117,106 @@ function RegisterPage(props) {
                     } = props;
                     return (
                         <div className='app'>
-                            <section>
+                            <div className='inputForm'>
                                 <h1>회원가입</h1>
-                            </section>
-                            <form style={{ width: '375px' }} onSubmit={handleSubmit} >
-                                <div>
-                                    <label><input name='role' type='radio' value='normal' checked={values.role === "normal"} onChange={handleChange} />일반회원</label>
-                                    <label><input name='role' type='radio' value='protection' checked={values.role === "protection"} onChange={handleChange} />보호소 직원</label>
-                                    
-                                </div>
-                                <div>
-                                    <label>이메일
-                                    <input
-                                        id='email'
-                                        type='email'
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={
-                                            errors.email && touched.email ? 'text-input error' : 'text-input'
-                                        }
-                                    /></label>
-                                    {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
-                                </div>
-                                <div id='authNumber'>
-                                    <button  >인증번호</button>
-                                    <input id='inputAuthNum' type='number' placeholder='인증번호 입력' />
-                                </div>
-                                <div>
-                                    <label>닉네임
-                                    <input
-                                        id='nickname'
-                                        type='text'
-                                        value={values.nickname}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={
-                                            errors.nickname && touched.nickname ? 'text-input error' : 'text-input'
-                                        }
-                                    /></label>
-                                    {errors.nickname && touched.nickname && (<div className="input-feedback">{errors.nickname}</div>)}
-                                    
-                                </div>
-                                <div>
-                                    <label>비밀번호
-                                    <input
-                                        id='password'
-                                        type='password'
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={
-                                            errors.password && touched.password ? 'text-input error' : 'text-input'
-                                        }
-                                    /></label>
-                                    {errors.password && touched.password && (<div className="input-feedback">{errors.password}</div>)}
-                                </div>
-                                <div>
-                                    <label>비밀번호 확인
-                                    <input
-                                        id='confirmPassword'
-                                        type='password'
-                                        value={values.confirmPassword}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={
-                                            errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
-                                        }
-                                    /></label>
-                                    {errors.confirmPassword && touched.confirmPassword && (<div className="input-feedback">{errors.confirmPassword}</div>)}
-                                </div>
-                                <div>
-                                    <label>거주지역
-                                    <select style={{width:120}}
-                                        id='selectRegion'
-                                        onChange={handleChangeOption}
-                                        onBlur={handleBlur}
-                                        value={SelectedRegion}
-                                        className={
-                                            errors.region && touched.region ? 'text-input error' : 'text-input'
-                                        }
+                                
+                                <form onSubmit={handleSubmit} >
+                                    <div className='radio_group'>
+                                        <div className='radio_group-item item-1'>
+                                            <input id='role-0' name='role' type='radio' value='normal' checked={values.role === "normal"} onChange={handleChange} />
+                                            <label for='role-0'>일반회원</label>
+                                        </div>
+                                        <div className='radio_group-item item-2'>
+                                            <input id='role-1' name='role' type='radio' value='protection' checked={values.role === "protection"} onChange={handleChange} />
+                                            <label for='role-1'>보호소 직원</label>
+                                        </div>
                                         
-                                    >
-                                    <option value={initialRegionOption}>{initialRegionOption.label}</option>
-                                    {RegionOptions.map((option) => (
-                                        <option key={option.id} value={option.label}>{option.label}</option>
-                                    ))}
-                                    </select></label>
-                                    {errors.region && touched.region && (<div className="input-feedback">{errors.region}</div>)}
-                                </div>
-                                <div>
-                                    <button type='submit' onChange={handleSubmit} disabled={isSubmitting} style={{minWidth: '100%'}}>회원가입</button>
-                                </div>
-                            </form>
+                                    </div>
+                                    <div className='infoForm'>
+                                        <input
+                                            id='email'
+                                            type='email'
+                                            placeholder='이메일'
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={
+                                                errors.email && touched.email ? 'text-input error' : 'text-input'
+                                            }
+                                        />
+                                        {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
+                                    </div>
+                                    <div className='authNumber'>
+                                        <button className='emailAuthBtn' onClick={handleShowInput} >인증번호</button>
+                                        { ShowInput ? <input className='inputAuthNum' type='text' placeholder='인증번호 입력' style={{ display: 'inline' }} /> : <input className='inputAuthNum' type='text' placeholder='인증번호 입력' style={{ display: 'none' }} /> }
+                                        
+                                    </div>
+                                    <div className='infoForm'>
+                                        <input
+                                            id='nickname'
+                                            type='text'
+                                            placeholder='닉네임'
+                                            value={values.nickname}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={
+                                                errors.nickname && touched.nickname ? 'text-input error' : 'text-input'
+                                            }
+                                        />
+                                        {errors.nickname && touched.nickname && (<div className="input-feedback">{errors.nickname}</div>)}
+                                        
+                                    </div>
+                                    <div className='infoForm'>
+                                        <input
+                                            id='password'
+                                            type='password'
+                                            placeholder='비밀번호'
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={
+                                                errors.password && touched.password ? 'text-input error' : 'text-input'
+                                            }
+                                        />
+                                        {errors.password && touched.password && (<div className="input-feedback">{errors.password}</div>)}
+                                    </div>
+                                    <div className='infoForm'>
+                                        <input
+                                            id='confirmPassword'
+                                            type='password'
+                                            placeholder='비밀번호 확인'
+                                            value={values.confirmPassword}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={
+                                                errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
+                                            }
+                                        />
+                                        {errors.confirmPassword && touched.confirmPassword && (<div className="input-feedback">{errors.confirmPassword}</div>)}
+                                    </div>
+                                    <div>
+                                        <select
+                                            id='selectRegion'
+                                            onChange={handleChangeOption}
+                                            onBlur={handleBlur}
+                                            value={SelectedRegion}
+                                            className={
+                                                errors.region && touched.region ? 'text-input error' : 'text-input'
+                                            }
+                                            
+                                        >
+                                        <option value={initialRegionOption}>{initialRegionOption.label}</option>
+                                        {RegionOptions.map((option) => (
+                                            <option key={option.id} value={option.label}>{option.label}</option>
+                                        ))}
+                                        </select>
+                                        {errors.region && touched.region && (<div className="input-feedback">{errors.region}</div>)}
+                                    </div>
+                                    <div>
+                                        <button className='submitBtn' type='submit' onChange={handleSubmit} disabled={isSubmitting} style={{minWidth: '100%'}}>회원가입</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     )
                 }}

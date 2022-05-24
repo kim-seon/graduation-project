@@ -18,10 +18,22 @@ var upload = multer({ storage: storage }).array('image')
 
 router.post('/writeForm', auth, (req, res) => {
     const write = new Write(req.body)
-    write.save((err) => {
+    write.save((err, write) => {
         if(err) return res.status(400).json({ success: false, err })
         return res.status(200).json({ success : true })
     })
+})
+
+router.get('/getContentList', (req, res) => {
+    Write.find().populate('writer')
+        .exec((err, board) => {
+            if(err) return res.status(400).send(err);
+            res.status(200).json({ success: true, board })
+        }) 
+})
+
+router.get('/getContentList/:id', auth, (req, res) => {
+    
 })
 
 module.exports = router

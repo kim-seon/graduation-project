@@ -1,11 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment'
+
 
 function ReadPage() {
+    const [BoardList, setBoardList] = useState([])
     const option = [
         { id: 0, label: "전체" },
         { id: 1, label: "제목" },
         { id: 2, label: "작성자" },
     ]
+
+    useEffect(() => {
+        axios.get('/api/write/getContentList')
+            .then(response => {
+                if(response.data.success) {
+                    console.log(response.data.board)
+                    setBoardList(response.data.board)
+                } else {
+                    alert('실패')
+                }
+            })
+    }, [])
+
+    const list = BoardList.map((item, index) => {
+        
+        return (
+            <tr key={item._id}>
+                <td>{item.id}</td>
+                <td>{item.category}</td>
+                <td>{item.title}</td>
+                <td>{item?.writer?.nickname}</td>
+                <td>{item.viewCount}</td>
+                <td>{item.commentCount}</td>
+                <td>{moment(item.writeDate).format('YYYY-MM-DD HH:mm')}</td>
+            </tr>
+        )
+    })
+    
     return (
         <div>
             <section>
@@ -23,14 +55,15 @@ function ReadPage() {
                 ))}
                 </select>
                 <input></input>
-                <button>글쓰기</button>
+                <a href='/basicwrite'>글쓰기</a>
             </section>
             <section>
-                <table>
+                <table style={{textAlign: 'center'}}>
                     <thead>
                         <tr>
+                            <th>번호</th>
                             <th>구분</th>
-                            <th>제목</th>
+                            <th >제목</th>
                             <th>작성자</th>
                             <th>조회수</th>
                             <th>댓글수</th>
@@ -38,14 +71,7 @@ function ReadPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>카테고리중</td>
-                            <td>안녕하세요</td>
-                            <td>선이</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>2022-05-02</td>
-                        </tr>
+                        {list}
                     </tbody>
                 </table>
             </section>
