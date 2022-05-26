@@ -124,11 +124,11 @@ function RegisterPage(props) {
                                     <div className='radio_group'>
                                         <div className='radio_group-item item-1'>
                                             <input id='role-0' name='role' type='radio' value='normal' checked={values.role === "normal"} onChange={handleChange} />
-                                            <label for='role-0'>일반회원</label>
+                                            <label htmlFor='role-0'>일반회원</label>
                                         </div>
                                         <div className='radio_group-item item-2'>
                                             <input id='role-1' name='role' type='radio' value='protection' checked={values.role === "protection"} onChange={handleChange} />
-                                            <label for='role-1'>보호소 직원</label>
+                                            <label htmlFor='role-1'>보호소 직원</label>
                                         </div>
                                         
                                     </div>

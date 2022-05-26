@@ -21,6 +21,7 @@ import Simpleform from './components/WritePage/Simpleform';
 import ReadDetail from './components/ReadPage/ReadDetail';
 import Auth from './hoc/auth';
 import ReadPage from './components/ReadPage/ReadPage';
+import AdoptDetailModal from './components/AdoptPage/AdoptDetailModal';
 
 function App() {
   const NewMainPage = Auth(MainPage, null)
@@ -47,6 +48,7 @@ function App() {
           <Route path='/volunteer' element={<NewVolunteerPage/>}/>
           <Route path='/review' element={<NewReviewPage/>}/>
           <Route path='/adopt' element={<NewAdoptPage/>}/>
+          <Route path='adoptModal' element={<AdoptDetailModal />} />
           <Route path='/find' element={<NewFindPage/>}/>
           <Route path='/basicwrite' element={<NewBasicPage/>}/>
           <Route path='/simplewrite' element={<Simpleform/>}/>

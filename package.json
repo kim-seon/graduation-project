@@ -21,6 +21,7 @@
     "mongoose": "^6.2.9",
     "multer": "^1.4.4",
     "react-redux": "^7.2.7",
+    "request": "^2.88.2",
     "supervisor": "^0.12.0"
   },
   "devDependencies": {

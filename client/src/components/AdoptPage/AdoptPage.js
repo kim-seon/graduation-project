@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import style from './Adopt.module.css';
 
 function AdoptPage() {
@@ -23,45 +24,101 @@ function AdoptPage() {
         { id: 17, label: "제주" },
     ]
     const [SelectedRegion, setSelectedRegion] = useState('')
+    const [SelectKind, setSelectKind] = useState('')
+    const [SubmitResult, setSubmitResult] = useState({
+        region: "",
+        kind: ""
+    })
+    const [FilteringList, setFilteringList] = useState(false)
 
+    const handleKindChangeOption = (e) => {
+        setSelectKind(e.target.value)
+        console.log(SelectKind)
+    }
     const handleChangeOption = (e) => {
         setSelectedRegion(e.target.value)
         console.log(SelectedRegion)
     }
 
+    const [AnimalList, setAnimalList] = useState([])
+
+    useEffect(() => {
+        axios.get('/api/adopts/animalList')
+            .then(response => {
+                if(response.data.success) {
+                    console.log(response.data.obj.response.body.items)
+                    setAnimalList(response.data.obj.response.body.items)
+                } else {
+                    alert('실패')
+                }
+            })
+    }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitResult({
+            region: SelectedRegion,
+            kind: SelectKind
+        })
+        setFilteringList(true)
+        console.log(SubmitResult)
+    }
+
+
     return (
         <div className={style.mainDiv}>
-            <section>
-                <h2>보호중인 유기동물 조회</h2>
-                <div className={style.adoptMenuSort}>
-                <ul className={style.menuSort}>
-                    <li>전체</li>
-                    <li>강아지</li>
-                    <li>고양이</li>
-                </ul>
-                </div>
-            </section>
-            <section>
+            <form onSubmit={handleSubmit}>
+            <h2>보호중인 유기동물 조회</h2>
+                <div className={style.selectDiv}>
                 <select onChange={handleChangeOption} value={SelectedRegion} style={{width: 120}}>
                 <option value={initialRegionOption}>{initialRegionOption.label}</option>
                     {RegionOptions.map((option) => (
                         <option key={option.id} value={option.label}>{option.label}</option>
                     ))}
                 </select>
-            </section>
+                </div>
             <section>
-                <ul className={style.animalList}>
-                    <li>
-                        <div className={style.oneAnimal}>
-                            <img src="http://www.animal.go.kr/files/shelter/2022/04/202205231705544.jpg" alt="img" />
-                            <div className={style.oneAnimalContent}>
-                                <span className={style.contentAnimal}>
-                                    푸들
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <div className={style.adoptMenuSort}>
+                    <div className={style.sort1}>
+                        <input id='menuSort1' type='radio' name='kind' value="개" onChange={handleKindChangeOption} />
+                        <label htmlFor='menuSort1'>강아지</label>
+                    </div>
+                    <div className={style.sort2}>
+                        <input id='menuSort2' type='radio' name='kind' value="고양이" onChange={handleKindChangeOption} />
+                        <label htmlFor='menuSort2'>고양이</label>
+                        <input type='submit' onClick={handleSubmit} className={style.submitCheck}value='선택' />
+                    </div>
+                </div>
+            </section>
+            </form>
+            <section className={style.resultSection}>
+            {AnimalList.item?.filter((item) => {
+                if(SubmitResult.region === "" && SubmitResult.kind === "") {
+                    return {item}
+                } else if(FilteringList===true && item.noticeNo.includes(SubmitResult.region) && item.kindCd.includes(SubmitResult.kind)) {
+                    return {}
+                }
+            })?.map((item, index) => {
+                return (
+                        <ul key={index} className={style.animalList}>
+                            <li>
+                                <div className={style.oneAnimal}>
+                                    <img src={item.popfile} alt="image" />
+                                    <div className={style.oneAnimalContent}>
+                                        <span className={style.contentAnimal}>상태: {item.processState}</span>
+                                        <span className={style.contentAnimal}>품종: {item.kindCd}</span>
+                                        <span className={style.contentAnimal}>공고시작: {item.noticeSdt}</span>
+                                        <span className={style.contentAnimal}>공고종료: {item.noticeEdt}</span>
+                                        <span className={style.contentAnimal}>보호소: {item.careNm}</span>
+                                        <span className={style.contentAnimal}>보호소: {item.noticeNo}</span>
+                                        <span className={style.contentAnimal}>보호소: {item.kindCd}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                )
+            })
+            }
             </section>
         </div>
     )
