@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const serviceKey = 'SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D';
 
-router.get('/animalList', (req, res, callback) => {
+router.get('/animalList', (req, res) => {
     var url = 'http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic';
     var queryParams = '?' + encodeURIComponent("serviceKey") + '=' + serviceKey; /* Service Key*/
     queryParams += '&' + encodeURIComponent("bgnde") + '=' + encodeURIComponent(''); /* */
@@ -24,7 +24,6 @@ router.get('/animalList', (req, res, callback) => {
         method: 'GET'
     }, function (error, response, body) {
         var obj = JSON.parse(body)
-        callback(obj)
         if(error) { return res.status(400).send(error) }
         res.status(200).json({ success: true, obj })
     });

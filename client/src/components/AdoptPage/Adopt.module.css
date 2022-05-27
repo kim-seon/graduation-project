@@ -88,14 +88,17 @@ input[type=radio] {
 .resultSection {
     display: flex;
     flex-wrap: wrap;
-    list-style-type: none;
     overflow-y: auto;
     justify-content: center;
     margin: 0;
     padding: 0;
 }
 
-li {
+.animalList {
+    list-style-type: none;
+}
+
+.animalList > li {
     display: list-item;
     text-align: -webkit-match-parent;
 }
