@@ -29,7 +29,7 @@ function App() {
   const NewRegisterPage = Auth(RegisterPage, false)
   const NewMapPage = Auth(MapPage, null)
   const NewTalkPage = Auth(TalkPage, true)
-  const NewVolunteerPage = Auth(VolunteerPage, true)
+  const NewVolunteerPage = Auth(VolunteerPage, null)
   const NewReviewPage = Auth(ReviewPage, null)
   const NewAdoptPage = Auth(AdoptPage, null)
   const NewFindPage = Auth(FindPage, null)

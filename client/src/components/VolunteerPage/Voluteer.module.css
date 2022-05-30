@@ -1,0 +1,79 @@
+:root {
+    --btn-login-color: #C2C4B6;
+    --btn-color: #EEEEEE;
+    --btn-bg-color: #F9EBC8;
+    --btn-naver-color: #03C75A;
+    --btn-kakao-color: #FEE500;
+    --btn-facebook-color: #1877F2;
+    --btn-find-color: #FFD9C0;
+    --warning-color: #FEECE9;
+    --auth-btn-color: #F5E7DD;
+    --font-basic-color: #51777C;
+}
+
+.mainDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    align-items: center;
+    height: 100vh;
+}
+
+.selectList {
+    display: block;
+    text-align: right;
+}
+
+select {
+    padding: 5px;
+    margin-right: 5px;
+    border: 0;
+    border-radius: 10px;
+    background-color: var(--btn-color);
+}
+
+thead {
+    width: 100%;
+    display: block;
+    border-collapse: collapse;
+}
+
+th:nth-of-type(1), td:nth-of-type(1) {
+    width: 250px;
+}
+
+th:nth-of-type(2), td:nth-of-type(2) {
+    width: 150px;
+}
+
+th:last-child {
+    width: 220px;
+}
+
+td:last-child {
+    width: calc(220px - 20px);
+}
+
+tbody {
+    display: block;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid darkgray;
+    text-align: center;
+}
+
+tbody::-webkit-scrollbar {
+    width: 6px;
+}
+
+tbody::-webkit-scrollbar-thumb{
+    height: 17%;
+    background-color: var(--btn-color);
+    border-radius: 10px;    
+}
+

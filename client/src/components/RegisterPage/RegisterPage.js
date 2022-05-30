@@ -12,32 +12,6 @@ function RegisterPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const initialRegionOption ={ id: 0, label: "지역 선택" }
-    const RegionOptions = [
-        { id: 1, label: "서울" },
-        { id: 2, label: "인천" },
-        { id: 3, label: "대전" },
-        { id: 4, label: "대구" },
-        { id: 5, label: "광주" },
-        { id: 6, label: "부산" },
-        { id: 7, label: "울산" },
-        { id: 8, label: "세종" },
-        { id: 9, label: "경기" },
-        { id: 10, label: "강원" },
-        { id: 11, label: "충북" },
-        { id: 12, label: "충남" },
-        { id: 13, label: "경북" },
-        { id: 14, label: "경남" },
-        { id: 15, label: "전북" },
-        { id: 16, label: "전남" },
-        { id: 17, label: "제주" },
-    ]
-    const [SelectedRegion, setSelectedRegion] = useState('')
-
-    const handleChangeOption = (e) => {
-        setSelectedRegion(e.target.value)
-        console.log(SelectedRegion)
-    }
 
     const [ShowInput, setShowInput] = useState(false)
 
@@ -52,8 +26,7 @@ function RegisterPage(props) {
                 email: '',
                 nickname: '',
                 password: '',
-                confirmPassword: '',
-                region: '지역 선택'
+                confirmPassword: ''
             }}
             validationSchema={Yup.object().shape({
                 role: Yup.string()
@@ -76,9 +49,7 @@ function RegisterPage(props) {
                     .required('비밀번호를 입력하세요.'),
                 confirmPassword: Yup.string()
                     .oneOf([Yup.ref('password'), null], '비밀번호와 일치해야 해요.')
-                    .required('비밀번호를 확인하세요.'),
-                region: Yup.string()
-                    .required('거주지역을 선택하세요.')
+                    .required('비밀번호를 확인하세요.')
             })}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
@@ -86,8 +57,7 @@ function RegisterPage(props) {
                         role: values.role,
                         email: values.email,
                         password: values.password,
-                        nickname: values.nickname,
-                        region: SelectedRegion
+                        nickname: values.nickname
                     }
 
                     dispatch(registerUser(dataToSubmit)).then(response => {
@@ -193,24 +163,6 @@ function RegisterPage(props) {
                                             }
                                         />
                                         {errors.confirmPassword && touched.confirmPassword && (<div className="input-feedback">{errors.confirmPassword}</div>)}
-                                    </div>
-                                    <div>
-                                        <select
-                                            id='selectRegion'
-                                            onChange={handleChangeOption}
-                                            onBlur={handleBlur}
-                                            value={SelectedRegion}
-                                            className={
-                                                errors.region && touched.region ? 'text-input error' : 'text-input'
-                                            }
-                                            
-                                        >
-                                        <option value={initialRegionOption}>{initialRegionOption.label}</option>
-                                        {RegionOptions.map((option) => (
-                                            <option key={option.id} value={option.label}>{option.label}</option>
-                                        ))}
-                                        </select>
-                                        {errors.region && touched.region && (<div className="input-feedback">{errors.region}</div>)}
                                     </div>
                                     <div>
                                         <button className='submitBtn' type='submit' onChange={handleSubmit} disabled={isSubmitting} style={{minWidth: '100%'}}>회원가입</button>

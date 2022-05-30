@@ -25,6 +25,24 @@ function AdoptPage() {
     ]
     const [SelectedRegion, setSelectedRegion] = useState('')
     const [SelectKind, setSelectKind] = useState('')
+    const [SelectedNextPage, setSelectedNextPage] = useState('')
+    const [SelectedPrevPage, setSelectedPrevPage] = useState('')
+    const [Page, setPage] = useState(1)
+    const [Filter, setFilter] = useState({
+        region: '',
+        kind: ''
+    })
+    const [AnimalList, setAnimalList] = useState([])
+
+    useEffect(() => {
+        var config = {headers: {'Accept': '*/*'}}
+        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?upkind=${Filter.kind}&upr_cd=${Filter.region}&pageNo=${Page}&numOfRows=20&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
+        axios.get(url, config)
+            .then((response) => {
+                console.log(response.data.response.body.items)
+                setAnimalList(response.data.response.body.items)
+            }).catch(error => console.log(error))
+    }, [Filter.kind, Filter.region, Page])
 
     const handleKindChangeOption = (e) => {
         setSelectKind(e.target.value)
@@ -35,60 +53,57 @@ function AdoptPage() {
         console.log(SelectedRegion)
     }
 
-    const [FilterClick, setFilterClick] = useState(false)
-    const [AnimalList, setAnimalList] = useState([])
+    const handleNextPage = (e) => {
+        setSelectedNextPage(e.target.value)
+        setPage(Page + 1)
+        console.log(SelectedNextPage)
+    }
 
-    useEffect(() => {
-        var config = {headers: {'Accept': '*/*'}}
-        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?upkind=${SelectKind}&upr_cd=${SelectedRegion}&pageNo=1&numOfRows=12&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
-        axios.get(url, config)
-            .then((response) => {
-                console.log(response.data.response.body.items)
-                setAnimalList(response.data.response.body.items)
-            }).catch(error => console.log(error))
-
-    }, [])
-
+    const handlePrevPage = (e) => {
+        setSelectedPrevPage(e.target.value)
+        if(Page > 1) {
+            setPage(Page - 1)
+        }
+        console.log(SelectedPrevPage)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        var config = {headers: {'Accept': '*/*'}}
-        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?upkind=${SelectKind}&upr_cd=${SelectedRegion}&pageNo=1&numOfRows=12&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
-        axios.get(url, config)
-            .then((response) => {
-                console.log(response.data.response.body.items)
-                setAnimalList(response.data.response.body.items)
-            }).catch(error => console.log(error))
+        setFilter({
+            region: SelectedRegion,
+            kind: SelectKind
+        })
     }
-
 
     return (
         <div className={style.mainDiv}>
-            
             <h2>보호중인 유기동물 조회</h2>
-                <div className={style.selectDiv}>
-                <select onChange={handleChangeOption} value={SelectedRegion} style={{width: 120}}>
+            <section>
+            <div className={style.selectDiv}>
+                <select className={style.selectRegion} onChange={handleChangeOption} value={SelectedRegion} style={{width: 120}}>
                 <option value={initialRegionOption}>{initialRegionOption.label}</option>
                     {RegionOptions.map((option) => (
                         <option key={option.id} value={option.value}>{option.label}</option>
                     ))}
                 </select>
+            </div>
+            <div className={style.adoptMenuSort}>
+                <div className={style.sort1}>
+                    <input id='menuSort1' type='radio' name='kind' value="417000" onChange={handleKindChangeOption} />
+                    <label htmlFor='menuSort1'>강아지</label>
                 </div>
-            <section>
-                <div className={style.adoptMenuSort}>
-                    <div className={style.sort1}>
-                        <input id='menuSort1' type='radio' name='kind' value="417000" onChange={handleKindChangeOption} />
-                        <label htmlFor='menuSort1'>강아지</label>
-                    </div>
-                    <div className={style.sort2}>
-                        <input id='menuSort2' type='radio' name='kind' value="422400" onChange={handleKindChangeOption} />
-                        <label htmlFor='menuSort2'>고양이</label>
-                        <input type='button' onClick={handleSubmit} className={style.submitCheck}value='선택' />
-                    </div>
+                <div className={style.sort2}>
+                    <input id='menuSort2' type='radio' name='kind' value="422400" onChange={handleKindChangeOption} />
+                    <label htmlFor='menuSort2'>고양이</label>
+                    <input type='button' onClick={handleSubmit} className={style.submitCheck}value='선택' />
                 </div>
+            </div>
             </section>
-            
-            <section className={style.resultSection}>
+            <div className={style.pageBar}>
+                <button className={style.prevBtn} onClick={handlePrevPage}>이전페이지</button>
+                <button className={style.nextBtn} onClick={handleNextPage}>다음페이지</button>
+            </div>
+            <div className={style.resultSection}>
             {AnimalList.item?.map((item, index) => {
                 return (
                         <ul key={index} className={style.animalList}>
@@ -96,7 +111,7 @@ function AdoptPage() {
                                 <div className={style.oneAnimal}>
                                     <img src={item.popfile} alt="image" />
                                     <div className={style.oneAnimalContent}>
-                                        <span className={style.contentAnimal}>상태: {item.processState}</span>
+                                        <span><a className={style.contentAnimalState}>{item.processState}</a></span>
                                         <span className={style.contentAnimal}>품종: {item.kindCd}</span>
                                         <span className={style.contentAnimal}>공고시작: {item.noticeSdt}</span>
                                         <span className={style.contentAnimal}>공고종료: {item.noticeEdt}</span>
@@ -108,7 +123,8 @@ function AdoptPage() {
                 )
             })
             }
-            </section>
+            </div>
+
         </div>
     )
 }
