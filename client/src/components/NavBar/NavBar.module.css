@@ -9,6 +9,7 @@
     --warning-color: #FEECE9;
     --auth-btn-color: #F5E7DD;
     --font-basic-color: #51777C;
+    --bg-color: #FCF8E8;
 }
 
 .navMenu {
@@ -19,9 +20,8 @@
     width: 100%;
     top: 0;
     z-index: 1;
-    background-color: var(--btn-color);
-    box-shadow: 0px 0px 12px 2px lightgrey;
-    border-bottom: 1px solid var(--font-basic-color);
+    background-color: var(--bg-color);
+    border-bottom: 2px solid var(--font-basic-color);
 }
 
 .menu {
@@ -31,7 +31,6 @@
     margin: 0;
     padding: 15px;
     overflow: hidden;
-    
 }
 
 .logo {
@@ -52,34 +51,10 @@
     text-decoration: none;
 }
 
-
-.landingDiv {
-    display: flex;
-    height: 100vh;
-    margin: 0;
-    background-color: var(--btn-color);
-    background-size: cover;
-}
-
-.landingContent {
-    text-align: center;
-    margin-top: 10vh;
-}
-
-.landingContent > h1 {
+.subMenu {
     margin: 0;
     padding: 0;
-    font-size: 160px;
-    font-weight:bolder;
-    color: var(--font-basic-color);
-    letter-spacing: 20px;
-}
-
-.mainImage {
-    margin-top: -90px;
-    z-index: 1;
-}
-
-.mainImage > img {
-    width: 55%;
+    list-style: none;
+    position: absolute;
+    text-align: left;
 }

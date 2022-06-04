@@ -26,6 +26,14 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/checkId', (req, res) => {
+    const {email} = req.body
+    const user = User.findOne({email})
+    if(user) {
+        res.send('2')
+    }
+})
+
 router.post('/login', (req, res) => {
     //요청된 이메일을 DB에 있는지 찾는다.
     User.findOne({ email: req.body.email }, (err, user) => {

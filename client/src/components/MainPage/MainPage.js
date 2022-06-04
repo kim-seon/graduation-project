@@ -2,10 +2,19 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import style from './Main.module.css'
 import adoptLogo from './image/adoptLogo.png'
+import mainImage from './image/dogncat.png';
 
 function MainPage() {
     return (
         <div>
+            <div className={style.landingDiv}>
+                <div className={style.landingContent}>
+                    <h1>가족이 되어주세요</h1>
+                    <div className={style.mainImage}>
+                        <img src={mainImage} />
+                    </div>
+                </div>
+            </div> 
         <section className={style.boardAdopt}>
             <div className={style.boardAdoptMent}>
                 <div className={style.boardAdoptMentLeft}>

@@ -9,6 +9,7 @@
     --warning-color: #FEECE9;
     --auth-btn-color: #F5E7DD;
     --font-basic-color: #51777C;
+    --bg-color: #FCF8E8;
 }
 
 .mainDiv {
@@ -18,6 +19,7 @@
     align-items: center;
     height: 100vh;
 }
+
 
 .selectRegion {
     width: 100%;

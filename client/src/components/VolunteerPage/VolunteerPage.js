@@ -46,7 +46,7 @@ function VolunteerPage() {
 
     useEffect(() => {
         var config = {headers: {'Accept': '*/*'}}
-        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?numOfRows=20&pageNo=1&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
+        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?numOfRows=315&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
         axios.get(url, config)
             .then((response) => {
                 console.log(response.data.response.body.items)
@@ -55,11 +55,11 @@ function VolunteerPage() {
     }, [])
 
     return (
-        <div className={style.mainDiv}>
+        <div className={style.fullDiv}>
             <h2>동물보호센터 조회</h2>
-            <div>
-                <div>
-
+            <div className={style.mainDiv}>
+                <div className={style.mapDetail}>
+                    
                 </div>
                 <div>
                     <section className={style.selectList}>
@@ -75,8 +75,7 @@ function VolunteerPage() {
                                     <option key={option.id} value={option.value}>{option.label}</option>
                                 ))}
                         </select>
-                    </section>
-                    <table className={style.listTabel}>
+                        <table className={style.listTabel}>
                         <thead>
                             <tr>
                                 <th>센터명</th>
@@ -96,6 +95,8 @@ function VolunteerPage() {
                                 })}
                         </tbody>
                     </table>
+                    </section>
+                    
                 </div>
             </div>
         </div>

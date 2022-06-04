@@ -9,6 +9,7 @@
     --warning-color: #FEECE9;
     --auth-btn-color: #F5E7DD;
     --font-basic-color: #51777C;
+    --bg-color: #FCF8E8;
 }
 
 * {
@@ -25,6 +26,34 @@ h3 {
 
 p {
     font-size: 18px;
+}
+
+
+.landingContent {
+    text-align: center;
+    height: 95vh;
+    margin: 0;
+    margin-top: 7vh;
+    background-color: var(--bg-color);
+    background-size: cover;
+}
+
+.landingContent > h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 160px;
+    font-weight:bolder;
+    color: var(--font-basic-color);
+    letter-spacing: 20px;
+}
+
+.mainImage {
+    margin-top: -90px;
+    z-index: 1;
+}
+
+.mainImage > img {
+    width: 55%;
 }
 
 .adoptLogo {

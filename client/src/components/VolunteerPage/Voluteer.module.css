@@ -11,17 +11,39 @@
     --font-basic-color: #51777C;
 }
 
+.fullDiv {
+    margin-top: 13vh;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+}
+
 .mainDiv {
-    display: flex;
-    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
     margin-top: 10vh;
     align-items: center;
     height: 100vh;
 }
 
+.mapDetail {
+    width: 480px;
+    height: 550px;
+    text-align: center;
+    float: left;
+    margin-left: 10vh;
+    border-radius: 1em;
+    box-shadow: 5px 5px 10px 0px darkgray;
+}
+
+
 .selectList {
-    display: block;
+    margin-left: 50px;
+    float: right;
     text-align: right;
+    margin-right: 10vh;
 }
 
 select {
@@ -56,9 +78,10 @@ td:last-child {
 
 tbody {
     display: block;
-    max-height: 400px;
+    max-height: 450px;
     overflow-x: hidden;
     overflow-y: scroll;
+    cursor: pointer;
 }
 
 th, td {

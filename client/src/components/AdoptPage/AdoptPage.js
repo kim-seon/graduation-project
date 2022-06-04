@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import style from './Adopt.module.css';
+import AdoptDetailModal from './AdoptDetailModal';
 
 function AdoptPage() {
     const initialRegionOption ={ id: 0, label: "지역 선택" }
@@ -23,26 +24,50 @@ function AdoptPage() {
         { id: 16, value: '6460000', label: "전남" },
         { id: 17, value: '6500000', label: "제주" },
     ]
-    const [SelectedRegion, setSelectedRegion] = useState('')
-    const [SelectKind, setSelectKind] = useState('')
-    const [SelectedNextPage, setSelectedNextPage] = useState('')
-    const [SelectedPrevPage, setSelectedPrevPage] = useState('')
+    const [SelectedRegion, setSelectedRegion] = useState("")
+    const [SelectKind, setSelectKind] = useState("")
+    const [SelectedNextPage, setSelectedNextPage] = useState("")
+    const [SelectedPrevPage, setSelectedPrevPage] = useState("")
     const [Page, setPage] = useState(1)
     const [Filter, setFilter] = useState({
-        region: '',
-        kind: ''
+        region: "",
+        kind: ""
     })
     const [AnimalList, setAnimalList] = useState([])
+    const [isVisible, setIsVisible] = useState(false);
+    const [SelectedList, setSelectedList] = useState(null)
+
+    const onSetIsVisible = (list) => {
+        setIsVisible(true);
+        setSelectedList(list);
+    };
+
+    const closeModal = (e) => {
+        e.preventDefault();
+        setSelectedList(null);
+        setIsVisible(false);
+    };
+
 
     useEffect(() => {
+
         var config = {headers: {'Accept': '*/*'}}
-        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?upkind=${Filter.kind}&upr_cd=${Filter.region}&pageNo=${Page}&numOfRows=20&serviceKey=SutH0Y4nGuUCdZHtSVrjnaRle9CT7Do1j7h9Tv9U7Qi2Ha%2FAHzeSV1MatoUg%2BYb43vFih%2FlHXDNC34l%2B15LfxA%3D%3D&_type=json`
+        var url = `https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?upkind=${Filter.kind}&upr_cd=${Filter.region}&pageNo=${Page}&numOfRows=20&serviceKey=YazNzI%2BG5V9YUVi8ow7kRmx82dJPZWZCN3%2FH%2Boy3xAqh1DOiPfZ663FLDjpKjKXJN6Yvn4ko6WyQylHbETYyjA%3D%3D&_type=json`
         axios.get(url, config)
-            .then((response) => {
-                console.log(response.data.response.body.items)
-                setAnimalList(response.data.response.body.items)
-            }).catch(error => console.log(error))
+            .then((res) => {
+                console.log(res.data.response.body.items)
+                setAnimalList(res.data.response.body.items)
+            })
     }, [Filter.kind, Filter.region, Page])
+
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFilter({
+            region: SelectedRegion,
+            kind: SelectKind
+        })
+    }
 
     const handleKindChangeOption = (e) => {
         setSelectKind(e.target.value)
@@ -67,13 +92,6 @@ function AdoptPage() {
         console.log(SelectedPrevPage)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFilter({
-            region: SelectedRegion,
-            kind: SelectKind
-        })
-    }
 
     return (
         <div className={style.mainDiv}>
@@ -108,7 +126,7 @@ function AdoptPage() {
                 return (
                         <ul key={index} className={style.animalList}>
                             <li>
-                                <div className={style.oneAnimal}>
+                                <div className={style.oneAnimal} onClick={() => onSetIsVisible(item)}>
                                     <img src={item.popfile} alt="image" />
                                     <div className={style.oneAnimalContent}>
                                         <span><a className={style.contentAnimalState}>{item.processState}</a></span>
@@ -123,8 +141,12 @@ function AdoptPage() {
                 )
             })
             }
+            <div>
+                { isVisible && (
+                    <AdoptDetailModal setIsVisible={setIsVisible} closeModal={closeModal} itemList={SelectedList}/>
+                )}
             </div>
-
+            </div>
         </div>
     )
 }

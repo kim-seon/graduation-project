@@ -6,18 +6,12 @@ import { registerUser } from '../../_actions/user_action';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { IoIosArrowDropleft } from "react-icons/io";
 
 
 function RegisterPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-
-    const [ShowInput, setShowInput] = useState(false)
-
-    const handleShowInput = () => {
-        setShowInput(true)
-    }
 
     return (
         <Formik
@@ -71,7 +65,7 @@ function RegisterPage(props) {
                 }, 500);
                 
             }}
-            
+
             >
                 {props => {
                     const {
@@ -87,9 +81,11 @@ function RegisterPage(props) {
                     } = props;
                     return (
                         <div className='app'>
+                            <div className='backBtn'>
+                                <a href='/'><IoIosArrowDropleft size="35" color='C2C4B6'/></a>
+                            </div>
                             <div className='inputForm'>
                                 <h1>회원가입</h1>
-                                
                                 <form onSubmit={handleSubmit} >
                                     <div className='radio_group'>
                                         <div className='radio_group-item item-1'>
@@ -102,7 +98,7 @@ function RegisterPage(props) {
                                         </div>
                                         
                                     </div>
-                                    <div className='infoForm'>
+                                    <div className='registerId'>
                                         <input
                                             id='email'
                                             type='email'
@@ -113,14 +109,12 @@ function RegisterPage(props) {
                                             className={
                                                 errors.email && touched.email ? 'text-input error' : 'text-input'
                                             }
-                                        />
-                                        {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
-                                    </div>
-                                    <div className='authNumber'>
-                                        <button className='emailAuthBtn' onClick={handleShowInput} >인증번호</button>
-                                        { ShowInput ? <input className='inputAuthNum' type='text' placeholder='인증번호 입력' style={{ display: 'inline' }} /> : <input className='inputAuthNum' type='text' placeholder='인증번호 입력' style={{ display: 'none' }} /> }
+                                        /><button className='emailAuthBtn'>중복<br/>확인</button>
                                         
                                     </div>
+                                    <div>
+                                            {errors.email && touched.email && (<div className="input-feedback">{errors.email}</div>)}
+                                        </div>
                                     <div className='infoForm'>
                                         <input
                                             id='nickname'
@@ -170,6 +164,7 @@ function RegisterPage(props) {
                                 </form>
                             </div>
                         </div>
+
                     )
                 }}
             </Formik>

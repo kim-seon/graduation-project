@@ -18,9 +18,6 @@ const userSchema = mongoose.Schema({
         type: String,
         minlength: 5
     },
-    region: {
-        type: String
-    },
     role: {
         type: String,
         default: 'normal'

@@ -1,13 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { loginUser } from '../../_actions/user_action';
 import { KAKAO_AUTH_URL } from '../../modules/KakaoAuth';
+import { IoIosArrowDropleft } from "react-icons/io";
 
 function LoginPage(props) {
+    const { naver } = window;
+    const location = useLocation();
+    const NAVER_CALLBACK_URL = 'http://localhost:3000/';
+    const NAVER_CLIENT_ID = 'qDUWI81FaRtxoY0PrdSP';
+
+    const initializeNaverLogin = () => {
+        const naverLogin = new naver.LoginWithNaverId({
+            clientId: NAVER_CLIENT_ID,
+            callbackUrl: NAVER_CALLBACK_URL,
+            isPopup: false,
+            loginButton: { color: 'green', type: 3, height: '40' },
+        });
+        naverLogin.init();
+    };
+
+    const getNaverToken = () => {
+        if (!location.hash) return;
+        const token = location.split('#')[1].hash.split('=')[1].split('&')[0];
+        console.log(token);
+    };
+
+    useEffect(() => {
+        initializeNaverLogin();
+        getNaverToken();
+    }, []);
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -69,6 +96,9 @@ function LoginPage(props) {
                 } = props;
                 return (
                     <div className='app'>
+                            <div className='backBtn'>
+                                <a href='/'><IoIosArrowDropleft size="35" color='C2C4B6'/></a>
+                            </div>
                         <div className='inputForm'>
                             <h1>로그인</h1>
                             <form onSubmit={handleSubmit} >
@@ -104,7 +134,7 @@ function LoginPage(props) {
                                 {formErrorMessage && (<label><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>)} 
                                 <div className='socialLogin'>
                                     <p id='kakaoIdLogin'><a href={KAKAO_AUTH_URL} style={{ textDecorationLine: 'none' }}>카카오 로그인</a></p>
-                                    <p id='naverIdLogin'><a>네이버 로그인</a></p>
+                                    <p id='naverIdLogin'></p>
                                     <p id='facebookIdLogin'><a>페이스북 로그인</a></p>
                                 </div>
                                 <div>
