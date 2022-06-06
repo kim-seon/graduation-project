@@ -29,15 +29,34 @@ h2 {
 }
 
 .mapDetail {
-    width: 480px;
-    height: 550px;
-    text-align: center;
+    width: 40%;
+    height: 650px;
     float: left;
-    margin-left: 10vh;
     border-radius: 1em;
     box-shadow: 5px 5px 10px 0px darkgray;
 }
 
+.map {
+    z-index: 0;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+.listV {
+    width: 100%;
+    height: auto;
+    padding: 1.5em;
+    text-align: left;
+    overflow-y: auto;
+}
+
+p {
+    font-size: 17px;
+}
+
+p > b {
+    background-color: var(--auth-btn-color);
+}
 
 .selectList {
     margin-left: 50px;
@@ -78,7 +97,7 @@ td:last-child {
 
 tbody {
     display: block;
-    max-height: 450px;
+    max-height: 500px;
     overflow-x: hidden;
     overflow-y: scroll;
     cursor: pointer;

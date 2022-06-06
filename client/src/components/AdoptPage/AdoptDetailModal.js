@@ -33,7 +33,7 @@ function AdoptDetailModal(props) {
                     <span><b>중성화 여부</b> {itemList.neuterYn}</span>
                     <span><b>보호소 번호</b> {itemList.careTel}</span>
                 </div>
-            </div>           
+            </div>          
             </div>
         </div>
     )
