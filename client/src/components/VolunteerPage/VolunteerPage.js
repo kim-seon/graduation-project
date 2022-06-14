@@ -138,7 +138,6 @@ function VolunteerPage() {
                         </tbody>
                     </table>
                     </section>
-                    
                 </div>
             </div>
         </div>

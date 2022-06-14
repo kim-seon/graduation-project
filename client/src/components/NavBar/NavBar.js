@@ -12,12 +12,7 @@ function NavBar() {
                 <ul className={style.menu}>
                     <li><a href='adopt'>가족되기</a></li>
                     <li><a href='/volunteer'>도움되기</a></li>
-                    <li><a href='/map'>준비하기</a>
-                        <ul className={style.subMenu}>
-                            <li>동물병원</li>
-                            <li>동물등록 대행업체</li>
-                        </ul>
-                    </li>
+                    <li className={style.readyCategory} ><a href='/map'>준비하기</a></li>
                     <li><a href='find'>살피기</a></li>
                     <li><a href='review'>입양후기</a></li>
                     <li><a href='/community'>잡담하기</a></li>

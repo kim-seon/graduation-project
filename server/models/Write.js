@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const writeSchema = mongoose.Schema({
-    id: {
+    index: {
         type: Number
     },
     Category: {

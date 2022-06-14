@@ -1,0 +1,120 @@
+:root {
+    --btn-login-color: #C2C4B6;
+    --btn-color: #EEEEEE;
+    --scroll-color: #acacac;
+    --btn-bg-color: #F9EBC8;
+    --btn-naver-color: #03C75A;
+    --btn-kakao-color: #FEE500;
+    --btn-facebook-color: #1877F2;
+    --btn-find-color: #FFD9C0;
+    --warning-color: #FEECE9;
+    --auth-btn-color: #F5E7DD;
+    --font-basic-color: #51777C;
+}
+
+.readDetailModal {
+    background-color: white;
+    width: 80%;
+    height: 80vh;
+    border-radius: 1em;
+    box-shadow: 5px 5px 10px 0px darkgray;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: 0.5em 1em 1em;
+    transform: translate(-50%, -50%);
+    z-index: 1011;
+    overflow-y: auto;
+}
+
+.readDetailModal > a {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+}
+
+h3 {
+    margin: 10px;
+}
+
+.readList tbody {
+    overflow: hidden;
+}
+
+.readList td:nth-child(odd) {
+    border-radius: 15px;
+    width: 100px;
+    background-color: var(--auth-btn-color);
+}
+
+.readList td:nth-child(2) {
+    width: 100px;
+}
+
+.readList td:nth-child(4) {
+    width: 180px;
+}
+
+.readList td:nth-child(6) {
+    width: 120px;
+}
+
+.readList td:nth-child(8) {
+    width: 70px;
+}
+
+.readList td:nth-child(10) {
+    width: 70px;
+}
+
+.readList td:last-child {
+    width: 70px;
+}
+
+.readContent {
+    padding: 20px;
+    height: 50vh;
+    border-bottom: 1px solid darkgray;
+    margin-bottom: 15px;
+}
+
+.menuBottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrList {
+    cursor: pointer;
+    background-color: var(--auth-btn-color);
+    padding: 1em;
+    border: 0;
+    border-radius: 15px;
+}
+
+.goodBtn {
+    cursor: pointer;
+    background-color:lightskyblue;
+    padding: 1em;
+    border: 0;
+    border-radius: 15px;
+}
+
+.badBtn {
+    margin-left: 10px;
+    cursor: pointer;
+    background-color:lightgray;
+    padding: 1em;
+    border: 0;
+    border-radius: 15px;
+}
+
+.readDetailModal::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--btn-color);
+}
+
+.readDetailModal::-webkit-scrollbar-thumb{
+    height: 17%;
+    background-color: var(--scroll-color);
+    border-radius: 10px;    
+}

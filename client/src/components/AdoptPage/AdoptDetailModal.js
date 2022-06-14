@@ -3,7 +3,6 @@ import axios from 'axios';
 import style from './Modal.module.css';
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-const { kakao } = window
 
 function AdoptDetailModal(props) {
     const { setIsVisible, itemList, closeModal  } = props

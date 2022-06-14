@@ -1,6 +1,7 @@
 :root {
     --btn-login-color: #C2C4B6;
     --btn-color: #EEEEEE;
+    --scroll-color: #acacac;
     --btn-bg-color: #F9EBC8;
     --btn-naver-color: #03C75A;
     --btn-kakao-color: #FEE500;
@@ -63,6 +64,9 @@ p > b {
     float: right;
     text-align: right;
     margin-right: 10vh;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 0px darkgray;
 }
 
 select {
@@ -79,19 +83,19 @@ thead {
     border-collapse: collapse;
 }
 
-th:nth-of-type(1), td:nth-of-type(1) {
+.listTabel th:nth-of-type(1), td:nth-of-type(1) {
     width: 250px;
 }
 
-th:nth-of-type(2), td:nth-of-type(2) {
+.listTabel th:nth-of-type(2), td:nth-of-type(2) {
     width: 150px;
 }
 
-th:last-child {
+.listTabel th:last-child {
     width: 220px;
 }
 
-td:last-child {
+.listTabel td:last-child {
     width: calc(220px - 20px);
 }
 
@@ -103,19 +107,24 @@ tbody {
     cursor: pointer;
 }
 
-th, td {
+.listTabel th, td {
     padding: 15px;
     border-bottom: 1px solid darkgray;
     text-align: center;
 }
 
+
+.listTabel tbody > tr:hover {
+    background-color: var(--btn-color);
+}
+
 tbody::-webkit-scrollbar {
     width: 6px;
+    background-color: var(--btn-color);
 }
 
 tbody::-webkit-scrollbar-thumb{
     height: 17%;
-    background-color: var(--btn-color);
+    background-color: var(--scroll-color);
     border-radius: 10px;    
 }
-

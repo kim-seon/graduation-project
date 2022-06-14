@@ -34,6 +34,7 @@ function App() {
   const NewAdoptPage = Auth(AdoptPage, null)
   const NewFindPage = Auth(FindPage, null)
   const NewBasicPage = Auth(Basicform, true)
+  const NewReadPage = Auth(ReadDetail, true)
 
   return (
     /**Suspense : 컴포넌트가 렌더링되기 전까지 로드 상태 */
@@ -52,7 +53,7 @@ function App() {
           <Route path='/find' element={<NewFindPage/>}/>
           <Route path='/basicwrite' element={<NewBasicPage/>}/>
           <Route path='/simplewrite' element={<Simpleform/>}/>
-          <Route path='/read/:id' element={<ReadDetail/>}/>
+          <Route path='/read' element={<NewReadPage/>}/>
           <Route path='/simpleread' element={<ReadPage/>}/>
           <Route path='/' element={<NewMainPage />} />
         </Routes>

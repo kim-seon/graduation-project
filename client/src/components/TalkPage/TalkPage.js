@@ -1,34 +1,67 @@
-import React from 'react';
-import { Select, Input, Button } from 'antd';
-
-const { Search } = Input;
-const { Option } = Select;
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import style from './Talk.module.css';
+import ReadDetail from '../ReadPage/ReadDetail'
 
 function TalkPage() {
+    const [BoardList, setBoardList] = useState([])
+    const option = [
+        { id: 0, label: "전체" },
+        { id: 1, label: "제목" },
+        { id: 2, label: "작성자" },
+    ]
+
+    const [isVisible, setIsVisible] = useState(false);
+    const [SelectedList, setSelectedList] = useState(null)
+
+    const onSetIsVisible = (list) => {
+        setIsVisible(true);
+        setSelectedList(list);
+    };
+
+    const closeModal = (e) => {
+        e.preventDefault();
+        setSelectedList(null);
+        setIsVisible(false);
+    };
+
+
+    useEffect(() => {
+        axios.get('/api/write/getContentList')
+            .then(response => {
+                if(response.data.success) {
+                    console.log(response.data.board)
+                    setBoardList(response.data.board)
+                } else {
+                    alert('실패')
+                }
+            })
+    }, [])
+
+    
     return (
-        <div>
-            <section>
-                <h2>잡담하기</h2>
-                <ul>
-                    <li>전체</li>
-                    <li>수다떨기</li>
-                    <li>묻고 답하기</li>
-                </ul>
-            </section>
-            <section>
-                <Select defaultValue='all' style={{width: 90}}>
-                    <Option value='all'>전체</Option>
-                    <Option value='title'>제목</Option>
-                    <Option value='writer'>작성자</Option>
-                </Select>
-                <Search placeholder="검색어를 입력해주세요" style={{width: 300}} enterButton />
-                <Button type="primary" >글쓰기</Button>
-            </section>
-            <section>
-                <table>
+        <div className={style.fullDiv}>
+            <h2>잡담하기</h2>
+            <div className={style.talkMenu}>
+                <div className={style.talkMenuLeft}>
+                    <select className={style.searchSelect}>
+                        {option.map((option) => (
+                            <option key={option.id} value={option.label}>{option.label}</option>
+                        ))}
+                    </select>
+                    <input/>
+                </div>
+                <div className={style.talkMenuRight}>
+                    <a href='/basicwrite'>글쓰기</a>
+                </div>
+                
+            </div>
+            <div>
+                <table className={style.readList}>
                     <thead>
                         <tr>
-                            <th>구분</th>
+                            <th>번호</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>조회수</th>
@@ -37,17 +70,26 @@ function TalkPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>수다떨기</td>
-                            <td>반가워요~</td>
-                            <td>김선</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>2일 전</td>
-                        </tr>
+                        {BoardList.map((item, index) => {
+                            return (
+                                <tr key={item._id} onClick={() => onSetIsVisible(item)}>
+                                    <td>{index+1}</td>
+                                    <td>{item.title}</td>
+                                    <td>{item?.writer?.nickname}</td>
+                                    <td>{item.viewCount}</td>
+                                    <td>{item.commentCount}</td>
+                                    <td>{moment(item.writeDate).format('YYYY-MM-DD HH:mm')}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
-            </section>
+            </div>
+            <div>
+                { isVisible && (
+                    <ReadDetail setIsVisible={setIsVisible} closeModal={closeModal} itemList={SelectedList}/>
+                )}
+            </div>
         </div>
     )
 }

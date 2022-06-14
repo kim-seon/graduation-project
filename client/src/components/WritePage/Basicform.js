@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+import style from './Basic.module.css';
 
 function Basicform() {
     const user = useSelector(state => state.user)
@@ -9,9 +10,7 @@ function Basicform() {
     const [Content, setContent] = useState('')
     const [Title, setTitle] = useState('')
     const [Image, setImage] = useState([])
-    
 
-    
     const addImage = (e) => {
         const selectImageList = e.target.files
         const imageURLList = [...Image]
@@ -47,13 +46,14 @@ function Basicform() {
             content: Content,
             images: Image
         }
+        
 
         axios.post('/api/write/writeForm', datas)
             .then(response => {
                 if(response.data.success) {
                     alert('글작성 성공')
-                    navigate('/simpleread')
-                    console.log(response)
+                    navigate('/community')
+                    console.log(response.data)
                 } else {
                     alert('글작성 실패')
                 }
@@ -63,44 +63,44 @@ function Basicform() {
         }
 
     return (
-        <div>
+        <div className={style.fullDiv}>
+            <h2>잡담하기</h2>
             <div>
-                <h2>카테고리 이름</h2>
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                </ul>
-            </div>
-            <div>
-            <form onSubmit={onsubmit}>
-                <label>제목
-                    <input 
+            <form className={style.formInput} onSubmit={onsubmit}>
+                <div className={style.titlePart}>
+                    <label>제목
+                    <input
+                        className={style.titleInput}
                         onChange={handleChangeTitle}
                         value={Title}
                     />
                 </label>
+                </div>
+                
                 <br/>
-                <textarea cols='90' rows='30' style={{resize: 'none'}} 
+                <textarea cols='90' rows='24'
+                    className={style.textArea}
                     onChange={handleChangeContent}
                     value={Content}
                 />
                 <br/>
+                <input
+                    className={style.input_file}
+                    id='input-file'
+                    type='file'
+                    multiple='multiple'
+                    accept='image/jpg,image/png,image/jpeg'
+                />
                 <label htmlFor='input-file' onChange={addImage}>
                 {Image.map((image, id) => (
                     <div key={id}>
                         <img src={image} alt={`${image}-${id}`} width='300' />
                     </div>
                 ))}
-                <input
-                    id='input-file'
-                    type='file'
-                    multiple='multiple'
-                    accept='image/jpg,image/png,image/jpeg'
-                />
                 </label>
-                <div>
-                    <button>목록 보기</button>
-                    <button onClick={onSubmit}>등록</button>
+                <div className={style.btnPart}>
+                    <button className={style.wrsList}>목록 보기</button>
+                    <button onClick={onSubmit} className={style.wrSubmit}>등록</button>
                 </div>
             </form>
             </div>

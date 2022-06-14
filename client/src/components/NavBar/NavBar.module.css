@@ -30,7 +30,6 @@
     list-style-type: none;
     margin: 0;
     padding: 15px;
-    overflow: hidden;
 }
 
 .logo {
@@ -39,7 +38,8 @@
 }
 
 .menu > li {
-    float:left;
+    float: left;
+    position: relative;
 }
 
 .menu > li > a {
@@ -51,10 +51,3 @@
     text-decoration: none;
 }
 
-.subMenu {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: absolute;
-    text-align: left;
-}
